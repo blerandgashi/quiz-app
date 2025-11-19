@@ -53,6 +53,7 @@ const questions = [
 
 let currentquestionIndex = 0;
 let score = 0;
+console.log(currentquestionIndex);
 
 let startScreenEl = document.querySelector("#start-screen");
 let quizScreenEl = document.querySelector("#quiz-screen");
@@ -67,14 +68,14 @@ startBtn.addEventListener("click", function(){
 })
 
 function getQuestions(){
-  let question = questions[currentquestionIndex]
-  questionText.textContent = question.question;
+  let questionContainer = questions[currentquestionIndex]
+  questionText.textContent = questionContainer.question;
 
   let questionNumber = document.querySelector("#question-number");
   questionNumber.textContent = `Question ${currentquestionIndex + 1} of ${questions.length}`
 
   let answersContainer = document.querySelector("#answers");
-  const answersArray = question.answers;
+  const answersArray = questionContainer.answers;
 
   answersContainer.innerHTML = ""
 
@@ -100,6 +101,8 @@ function checkAnswer(correctAnswerIndex){
   if (questions[currentquestionIndex].correct === correctAnswerIndex) {
     allBtns[correctAnswerIndex].classList.add("correct");
     score++;
+    console.log(score);
+    
     document.querySelector("#score").textContent = `${score} of ${questions.length}`;
   }else{
     allBtns[correctAnswerIndex].classList.add("wrong");
@@ -125,7 +128,7 @@ function showResult(){
 
   document.querySelector("#results-screen").classList.remove("hidden");
 
-  const finalScore = document.querySelector("#final-score").textContent = score;
+  const finalScore = document.querySelector("#score").textContent = score;
   document.querySelector(".final-score").textContent = `Your score: ${finalScore} / ${questions.length}`
 
   const resultMessage = document.querySelector("#result-message");
@@ -146,6 +149,6 @@ restartBtn.addEventListener("click", function(){
   document.querySelector("#start-screen").classList.remove("hidden");
 
   score = 0;
-  document.querySelector("#score").textContent = score;
+  document.querySelector(".final-score").textContent = score;
   currentquestionIndex = 0;
 })
